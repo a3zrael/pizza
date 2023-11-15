@@ -1,11 +1,13 @@
-import logo from './img/pizza-logo.svg';
+// import logo from './img/logo';
+//TODO сделать нормальный импорт без ошибки
+//TODO Ошибка "Cannot find module './img/logo' or its corresponding type declarations.ts(2307)"
 
 export const Header = () => {
     return (
         <div className="header">
             <div className="container">
                 <div className="header__logo">
-                    <img width="38" src={logo} alt="Pizza logo" />
+                    {/* <img width="38" src={logo} alt="Pizza logo" /> */}
                     <div>
                         <h1>React Pizza</h1>
                         <p>самая вкусная пицца во вселенной</p>
