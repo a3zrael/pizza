@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface PizzaCardProps {
     title?: string;
     price: number;
-    imgUrl: string;
+    imageUrl: string;
     sizes: number[];
     types: number[];
 }
@@ -11,7 +11,7 @@ interface PizzaCardProps {
 export const PizzaCard = ({
     title,
     price,
-    imgUrl,
+    imageUrl,
     sizes,
     types,
 }: PizzaCardProps) => {
@@ -24,12 +24,13 @@ export const PizzaCard = ({
 
     return (
         <div className="pizza-block">
-            <img className="pizza-block__image" src={imgUrl} alt="Pizza" />
+            <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
             <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                 <ul>
                     {types.map((type) => (
                         <li
+                            onClick={() => setActiveType(type)}
                             className={activeType === type ? 'active' : ''}
                             key={type}
                         >
@@ -40,6 +41,7 @@ export const PizzaCard = ({
                 <ul>
                     {sizes.map((size, index) => (
                         <li
+                            onClick={() => setActiveSize(index)}
                             key={size}
                             className={activeSize === index ? 'active' : ''}
                         >

@@ -19,14 +19,7 @@ export const App = () => {
                         <h2 className="content__title">Все пиццы</h2>
                         <div className="content__items">
                             {pizzas.map((element) => (
-                                <PizzaCard
-                                    key={element.id}
-                                    title={element.title}
-                                    price={element.price}
-                                    imgUrl={element.imageUrl}
-                                    sizes={element.sizes}
-                                    types={element.types}
-                                />
+                                <PizzaCard key={undefined} {...element} />
                             ))}
                         </div>
                     </div>
