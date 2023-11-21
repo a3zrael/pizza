@@ -22,11 +22,11 @@ body {
     &__title {
         margin: 35px 0;
     }
-
+    //TODO Поправить отображение, много места справа
     &__items {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     &__top {

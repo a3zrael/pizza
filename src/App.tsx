@@ -6,6 +6,11 @@ import pizzas from './components/pizzas.json';
 import './scss/App.scss';
 
 export const App = () => {
+    fetch('https://655cd02b25b76d9884fdfca4.mockapi.io/items').then(
+        (res: Array) => {
+            console.log(res);
+        }
+    );
     return (
         <>
             <div className="wrapper">
