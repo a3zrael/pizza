@@ -1,6 +1,6 @@
 import ContentLoader from 'react-content-loader';
 
-const Skeleton = (props) => (
+const Skeleton = () => (
     <ContentLoader
         speed={2}
         width={280}
@@ -8,7 +8,7 @@ const Skeleton = (props) => (
         viewBox="0 0 280 465"
         backgroundColor="#f3f3f3"
         foregroundColor="#ecebeb"
-        {...props}
+        className="skeleton"
     >
         <rect x="0" y="295" rx="10" ry="10" width="280" height="26" />
         <rect x="0" y="330" rx="10" ry="10" width="280" height="64" />

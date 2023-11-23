@@ -8,9 +8,8 @@ import './scss/App.scss';
 import { useEffect, useState } from 'react';
 
 export const App = () => {
-    PizzaCard;
-    Skeleton;
     const [pizzaItems, setPizzaItems] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         fetch('https://655cd02b25b76d9884fdfca4.mockapi.io/items')
             .then((res) => {
@@ -18,6 +17,7 @@ export const App = () => {
             })
             .then((arr: []) => {
                 setPizzaItems(arr);
+                setIsLoading(false);
             });
     }, []);
 
@@ -33,13 +33,14 @@ export const App = () => {
                         </div>
                         <h2 className="content__title">Все пиццы</h2>
                         <div className="content__items">
-                            {pizzaItems.map((element, index) => (
-                                <PizzaCard
-                                    key={index}
-                                    {...element}
-                                    className="skeleton"
-                                />
-                            ))}
+                            {/* //TODO сделать скелетон нормальным по размеру */}
+                            {isLoading
+                                ? [...new Array(7)].map((index) => (
+                                      <Skeleton key={index} />
+                                  ))
+                                : pizzaItems.map((element, index) => (
+                                      <PizzaCard key={index} {...element} />
+                                  ))}
                         </div>
                     </div>
                 </div>
