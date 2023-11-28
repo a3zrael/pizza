@@ -1,10 +1,10 @@
-import { Categories } from '../components/Categories/Categories';
-import { Sort } from '../components/Sort/Sort';
-import { PizzaCard } from '../components/PizzaCard/PizzaCard';
-import Skeleton from '../components/PizzaCard/Skeleton';
+import { Categories } from '../Categories/Categories';
+import { Sort } from '../Sort/Sort';
+import { PizzaCard } from '../PizzaCard/PizzaCard';
+import Skeleton from '../PizzaCard/Skeleton';
 import { useEffect, useState } from 'react';
 
-export const Home = () => {
+export const MainContent = () => {
     const [pizzaItems, setPizzaItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {

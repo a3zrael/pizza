@@ -1,6 +1,8 @@
+import { Route, Routes } from 'react-router-dom';
 import { Header } from './components/Header/Header';
-// import { Home } from './pages/Home';
-import { NotFound } from './pages/NotFound';
+// import { NotFoundPage } from './pages/NotFoundPage';
+import { MainContentPage } from './pages/MainContentPage';
+// import { CartPage } from './pages/CartPage';
 import './scss/App.scss';
 
 export const App = () => {
@@ -10,8 +12,12 @@ export const App = () => {
                 <Header />
                 <div className="content">
                     <div className="container">
-                        {/* <Home /> */}
-                        <NotFound />
+                        <Routes>
+                            <Route path="/" element={<MainContentPage />} />
+                            {/* <MainContentPage /> */}
+                            {/* <CartPage /> */}
+                            {/* <NotFoundPage /> */}
+                        </Routes>
                     </div>
                 </div>
             </div>
