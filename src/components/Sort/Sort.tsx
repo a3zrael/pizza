@@ -4,7 +4,7 @@ export const Sort = () => {
     const [open, setOpen] = useState(false);
     const [selectedSort, setSelectedSort] = useState(0);
 
-    const sortList = ['полулярности', 'цене', 'алфафиту'];
+    const sortList = ['полулярности', 'цене', 'алфавиту'];
 
     const onSelectSortElement = (index: number) => {
         setSelectedSort(index);

@@ -25,7 +25,6 @@ export const MainContent = () => {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-                {/* //TODO сделать скелетон нормальным по размеру */}
                 {isLoading
                     ? [...new Array(7)].map((index) => <Skeleton key={index} />)
                     : pizzaItems.map((element, index) => (
