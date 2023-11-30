@@ -2,7 +2,12 @@
 .pizza-block {
     width: 280px;
     text-align: center;
-    margin: 35px 17px;
+    margin: 35px 0px;
+
+    &-wrapper {
+        display: flex;
+        justify-content: center;
+    }
 
     &__image {
         width: 260px;
