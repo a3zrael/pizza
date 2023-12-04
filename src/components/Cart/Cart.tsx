@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export const Cart = () => {
     return (
         <div>
@@ -12,7 +14,6 @@ export const Cart = () => {
                         </div>
                     </div>
                     <div className="content__items">
-                        {/* <% include components/cart-item.ejs %> <% include components/cart-item.ejs %> <% */}
                         {/* include components/cart-item.ejs %> <% include components/cart-item.ejs %> */}
                     </div>
                     <div className="cart__bottom">
@@ -27,13 +28,13 @@ export const Cart = () => {
                             </span>
                         </div>
                         <div className="cart__bottom-buttons">
-                            <a
-                                href="/"
+                            <Link
+                                to="/"
                                 className="button button--outline button--add go-back-btn"
                             >
                                 {/* <% include ../../public/img/grey-arrow-left.svg %> */}
                                 <span>Вернуться назад</span>
-                            </a>
+                            </Link>
                             <div className="button pay-btn">
                                 <span>Оплатить сейчас</span>
                             </div>

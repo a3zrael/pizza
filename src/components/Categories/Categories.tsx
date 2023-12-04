@@ -1,6 +1,7 @@
 import React from 'react';
 
-export const Categories = () => {
+export const Categories = ({ value }) => {
+    console.log(value);
     const categories = [
         { title: 'Все', id: 0 },
         { title: 'Мясные', id: 1 },
