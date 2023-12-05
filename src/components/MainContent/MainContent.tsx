@@ -9,6 +9,8 @@ export const MainContent = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [categoryId, setCategorieId] = useState(0);
     const [sortType, setSortType] = useState(0);
+    sortType;
+    setSortType;
     useEffect(() => {
         fetch('https://655cd02b25b76d9884fdfca4.mockapi.io/items')
             .then((res) => {
@@ -23,8 +25,11 @@ export const MainContent = () => {
     return (
         <>
             <div className="content__top">
-                <Categories value={categoryId} />
-                <Sort />
+                <Categories
+                    value={categoryId}
+                    onClickCategory={(id: number) => setCategorieId(id)}
+                />
+                <Sort value={sortType} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">

@@ -1,7 +1,9 @@
-import React from 'react';
+interface CategoriesProps {
+    value: number;
+    onClickCategory: void;
+}
 
-export const Categories = ({ value }) => {
-    console.log(value);
+export const Categories = ({ value, onClickCategory }: CategoriesProps) => {
     const categories = [
         { title: 'Все', id: 0 },
         { title: 'Мясные', id: 1 },
@@ -11,22 +13,16 @@ export const Categories = ({ value }) => {
         { title: 'Закрытые', id: 5 },
     ];
 
-    const [activeIndex, setActiveIndex] = React.useState(0);
-
-    const onClickCategory = (index: number) => {
-        setActiveIndex(index);
-    };
-
     return (
         <div className="categories">
             <ul>
-                {categories.map((value, index) => (
+                {categories.map((categoriName, index) => (
                     <li
                         key={value.id}
                         onClick={() => onClickCategory(index)}
-                        className={activeIndex === index ? 'active' : ''}
+                        className={value === index ? 'active' : ''}
                     >
-                        {value.title}
+                        {categoriName.title}
                     </li>
                 ))}
             </ul>
