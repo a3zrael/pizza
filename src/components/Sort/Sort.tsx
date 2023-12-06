@@ -1,12 +1,21 @@
 import { useState } from 'react';
+import { sortTypes } from '../MainContent/MainContent';
 import './Sort.scss';
-export const Sort = ({ value }) => {
+
+interface SortProps {
+    value: sortTypes;
+    onChangeSort: (index: sortTypes) => void;
+}
+
+export const Sort = ({ value, onChangeSort }: SortProps) => {
     const [open, setOpen] = useState(false);
-
-    const sortList = ['полулярности', 'цене', 'алфавиту'];
-
-    const onSelectSortElement = (index: number) => {
-        setSelectedSort(index);
+    const sortList = [
+        { name: 'полулярности', sortProperty: 'rating' },
+        { name: 'цене', sortProperty: 'price' },
+        { name: 'алфавиту', sortProperty: 'title' },
+    ];
+    const onSelectSortElement = (index: sortTypes) => {
+        onChangeSort(index);
         setOpen(false);
     };
 
@@ -26,18 +35,22 @@ export const Sort = ({ value }) => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setOpen(!open)}>{sortList[value]}</span>
+                <span onClick={() => setOpen(!open)}>{value.name}</span>
             </div>
             {open && (
                 <div className="sort__popup">
                     <ul>
-                        {sortList.map((sortElement, index) => (
+                        {sortList.map((sortObj, index) => (
                             <li
                                 key={index}
-                                onClick={() => onSelectSortElement(index)}
-                                className={value === index ? 'active' : ''}
+                                onClick={() => onSelectSortElement(sortObj)}
+                                className={
+                                    value.sortProperty === sortObj.sortProperty
+                                        ? 'active'
+                                        : ''
+                                }
                             >
-                                {sortElement}
+                                {sortObj.name}
                             </li>
                         ))}
                     </ul>

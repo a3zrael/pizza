@@ -4,32 +4,54 @@ import { PizzaCard } from '../PizzaCard/PizzaCard';
 import Skeleton from '../PizzaCard/Skeleton';
 import { useEffect, useState } from 'react';
 
+interface PizzaItems {
+    id: number;
+    imageUrl: string;
+    price: number;
+    rating: number;
+    sizes: number[];
+    title: string;
+    types: number[];
+}
+
+export interface sortTypes {
+    name: string;
+    sortProperty: string;
+}
+
 export const MainContent = () => {
-    const [pizzaItems, setPizzaItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [categoryId, setCategorieId] = useState(0);
-    const [sortType, setSortType] = useState(0);
-    sortType;
-    setSortType;
+    const [pizzaItems, setPizzaItems] = useState<PizzaItems[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [categoryId, setCategorieId] = useState<number>(0);
+    const [sortType, setSortType] = useState<sortTypes>({
+        name: 'полулярности',
+        sortProperty: 'rating',
+    });
     useEffect(() => {
-        fetch('https://655cd02b25b76d9884fdfca4.mockapi.io/items')
-            .then((res) => {
-                return res.json();
-            })
+        setIsLoading(true);
+        fetch(
+            'https://655cd02b25b76d9884fdfca4.mockapi.io/items?category=' +
+                categoryId
+        )
+            .then((res) => res.json())
             .then((arr: []) => {
                 setPizzaItems(arr);
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
-    }, []);
+    }, [categoryId]);
+    console.log(categoryId, sortType);
     return (
         <>
             <div className="content__top">
                 <Categories
                     value={categoryId}
-                    onClickCategory={(id: number) => setCategorieId(id)}
+                    onChangeCategory={(i: number) => setCategorieId(i)}
                 />
-                <Sort value={sortType} />
+                <Sort
+                    value={sortType}
+                    onChangeSort={(index: sortTypes) => setSortType(index)}
+                />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">

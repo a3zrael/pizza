@@ -1,10 +1,15 @@
 interface CategoriesProps {
     value: number;
-    onClickCategory: void;
+    onChangeCategory: (index: number) => void;
 }
 
-export const Categories = ({ value, onClickCategory }: CategoriesProps) => {
-    const categories = [
+interface CategoriesArr {
+    title: string;
+    id: number;
+}
+
+export const Categories = ({ value, onChangeCategory }: CategoriesProps) => {
+    const categories: CategoriesArr[] = [
         { title: 'Все', id: 0 },
         { title: 'Мясные', id: 1 },
         { title: 'Вегетарианская', id: 2 },
@@ -18,8 +23,8 @@ export const Categories = ({ value, onClickCategory }: CategoriesProps) => {
             <ul>
                 {categories.map((categoriName, index) => (
                     <li
-                        key={value.id}
-                        onClick={() => onClickCategory(index)}
+                        key={categoriName.id}
+                        onClick={() => onChangeCategory(index)}
                         className={value === index ? 'active' : ''}
                     >
                         {categoriName.title}
