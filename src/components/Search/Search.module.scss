@@ -1,0 +1,25 @@
+.root_search {
+    position: relative;
+    .search {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 10px 15px;
+        width: 400px;
+        font-size: 16px;
+
+        &:focus {
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    .cross {
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        opacity: 0.3;
+        &:active {
+            color: rgba(255, 0, 0, 0.539);
+        }
+    }
+}

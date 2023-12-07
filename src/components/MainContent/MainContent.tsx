@@ -3,6 +3,8 @@ import { Sort } from '../Sort/Sort';
 import { PizzaCard } from '../PizzaCard/PizzaCard';
 import Skeleton from '../PizzaCard/Skeleton';
 import { useEffect, useState } from 'react';
+import { searchTypes } from '../Header/Header';
+import { Pagination } from '../Pagination';
 
 interface PizzaItems {
     id: number;
@@ -19,7 +21,7 @@ export interface sortTypes {
     sortProperty: string;
 }
 
-export const MainContent = () => {
+export const MainContent = ({ searchValue }: searchTypes) => {
     const [pizzaItems, setPizzaItems] = useState<PizzaItems[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [categoryId, setCategorieId] = useState<number>(0);
@@ -27,11 +29,17 @@ export const MainContent = () => {
         name: 'полулярности',
         sortProperty: 'rating',
     });
+
     useEffect(() => {
         setIsLoading(true);
+
+        const category = categoryId > 0 ? `category=${categoryId}` : '';
+        const sortBy = sortType.sortProperty.replace('-', '');
+        const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
+        const search = searchValue ? `&search=${searchValue}` : '';
+
         fetch(
-            'https://655cd02b25b76d9884fdfca4.mockapi.io/items?category=' +
-                categoryId
+            `https://655cd02b25b76d9884fdfca4.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`
         )
             .then((res) => res.json())
             .then((arr: []) => {
@@ -39,8 +47,16 @@ export const MainContent = () => {
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
-    }, [categoryId]);
-    console.log(categoryId, sortType);
+    }, [categoryId, sortType, searchValue]);
+
+    const pizzas = pizzaItems.map((element, index) => (
+        <PizzaCard key={index} {...element} />
+    ));
+
+    const skeletons = [...new Array(7)].map((index) => (
+        <Skeleton key={index} />
+    ));
+
     return (
         <>
             <div className="content__top">
@@ -55,12 +71,9 @@ export const MainContent = () => {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-                {isLoading
-                    ? [...new Array(7)].map((index) => <Skeleton key={index} />)
-                    : pizzaItems.map((element, index) => (
-                          <PizzaCard key={index} {...element} />
-                      ))}
+                {isLoading ? skeletons : pizzas}
             </div>
+            <Pagination />
         </>
     );
 };

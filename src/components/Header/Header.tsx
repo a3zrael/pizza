@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import logo from './img/logo.svg';
+import { Search } from '../Search/index';
 //TODO сделать нормальный импорт без ошибки
 //TODO Ошибка "Cannot find module './img/logo' or its corresponding type declarations.ts(2307)"
 
-export const Header = () => {
+export interface searchTypes {
+    searchValue: string;
+    setSearchValue: () => void;
+}
+
+export const Header = ({ searchValue, setSearchValue }: searchTypes) => {
     return (
         <div className="header">
             <div className="container">
@@ -16,6 +22,10 @@ export const Header = () => {
                         </div>
                     </div>
                 </Link>
+                <Search
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                />
                 <div className="header__cart">
                     <Link to="/cart" className="button button--cart">
                         <span>520 ₽</span>
