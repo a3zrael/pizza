@@ -25,11 +25,11 @@ export const MainContent = ({ searchValue }: searchTypes) => {
     const [pizzaItems, setPizzaItems] = useState<PizzaItems[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [categoryId, setCategorieId] = useState<number>(0);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const [sortType, setSortType] = useState<sortTypes>({
         name: 'полулярности',
         sortProperty: 'rating',
     });
-
     useEffect(() => {
         setIsLoading(true);
 
@@ -39,7 +39,7 @@ export const MainContent = ({ searchValue }: searchTypes) => {
         const search = searchValue ? `&search=${searchValue}` : '';
 
         fetch(
-            `https://655cd02b25b76d9884fdfca4.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`
+            `https://655cd02b25b76d9884fdfca4.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
         )
             .then((res) => res.json())
             .then((arr: []) => {
@@ -47,7 +47,7 @@ export const MainContent = ({ searchValue }: searchTypes) => {
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
-    }, [categoryId, sortType, searchValue]);
+    }, [categoryId, sortType, searchValue, currentPage]);
 
     const pizzas = pizzaItems.map((element, index) => (
         <PizzaCard key={index} {...element} />
@@ -73,7 +73,11 @@ export const MainContent = ({ searchValue }: searchTypes) => {
             <div className="content__items">
                 {isLoading ? skeletons : pizzas}
             </div>
-            <Pagination />
+            <Pagination
+                onChangePage={(numberPage: number) => {
+                    setCurrentPage(numberPage);
+                }}
+            />
         </>
     );
 };
