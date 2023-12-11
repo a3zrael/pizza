@@ -4,12 +4,7 @@ import { Search } from '../Search/index';
 //TODO сделать нормальный импорт без ошибки
 //TODO Ошибка "Cannot find module './img/logo' or its corresponding type declarations.ts(2307)"
 
-export interface searchTypes {
-    searchValue: string;
-    setSearchValue: () => void;
-}
-
-export const Header = ({ searchValue, setSearchValue }: searchTypes) => {
+export const Header = () => {
     return (
         <div className="header">
             <div className="container">
@@ -22,10 +17,7 @@ export const Header = ({ searchValue, setSearchValue }: searchTypes) => {
                         </div>
                     </div>
                 </Link>
-                <Search
-                    searchValue={searchValue}
-                    setSearchValue={setSearchValue}
-                />
+                <Search />
                 <div className="header__cart">
                     <Link to="/cart" className="button button--cart">
                         <span>520 ₽</span>

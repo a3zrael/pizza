@@ -1,8 +1,14 @@
-import { searchTypes } from '../Header/Header';
+import { useContext } from 'react';
 import styles from './Search.module.scss';
+import { SearchContext } from '../App/App';
 
-export const Search = ({ searchValue, setSearchValue }: searchTypes) => {
-    searchValue;
+export interface searchTypes {
+    searchValue: string;
+    setSearchValue: () => void;
+}
+
+export const Search = () => {
+    const { searchValue, setSearchValue } = useContext(SearchContext);
     return (
         <div className={styles.root_search}>
             <input

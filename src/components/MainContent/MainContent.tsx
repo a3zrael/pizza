@@ -2,9 +2,9 @@ import { Categories } from '../Categories/Categories';
 import { Sort } from '../Sort/Sort';
 import { PizzaCard } from '../PizzaCard/PizzaCard';
 import Skeleton from '../PizzaCard/Skeleton';
-import { useEffect, useState } from 'react';
-import { searchTypes } from '../Header/Header';
+import { FC, useContext, useEffect, useState } from 'react';
 import { Pagination } from '../Pagination';
+import { SearchContext } from '../App/App';
 
 interface PizzaItems {
     id: number;
@@ -21,7 +21,8 @@ export interface sortTypes {
     sortProperty: string;
 }
 
-export const MainContent = ({ searchValue }: searchTypes) => {
+export const MainContent: FC = () => {
+    const { searchValue } = useContext(SearchContext);
     const [pizzaItems, setPizzaItems] = useState<PizzaItems[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [categoryId, setCategorieId] = useState<number>(0);
