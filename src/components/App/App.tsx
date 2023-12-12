@@ -10,7 +10,6 @@ export const SearchContext = createContext('');
 
 export const App: FC = () => {
     const [searchValue, setSearchValue] = useState<string>('');
-
     return (
         <>
             <div className="wrapper">
