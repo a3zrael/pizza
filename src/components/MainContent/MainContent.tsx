@@ -7,6 +7,7 @@ import { Pagination } from '../Pagination';
 import { SearchContext } from '../App/App';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId } from '../../redux/slices/filter';
+import axios from 'axios';
 
 interface PizzaItems {
     id: number;
@@ -26,7 +27,6 @@ export const MainContent: FC = () => {
     const [pizzaItems, setPizzaItems] = useState<PizzaItems[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [currentPage, setCurrentPage] = useState<number>(1);
-
     useEffect(() => {
         setIsLoading(true);
 
@@ -35,14 +35,15 @@ export const MainContent: FC = () => {
         const order = sortType.includes('-') ? 'asc' : 'desc';
         const search = searchValue ? `&search=${searchValue}` : '';
 
-        fetch(
-            `https://655cd02b25b76d9884fdfca4.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-        )
-            .then((res) => res.json())
-            .then((arr: []) => {
-                setPizzaItems(arr);
+        axios
+            .get(
+                `https://655cd02b25b76d9884fdfca4.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+            )
+            .then((response) => {
+                setPizzaItems(response.data);
                 setIsLoading(false);
             });
+
         window.scrollTo(0, 0);
     }, [categoryId, sortType, searchValue, currentPage]);
 
