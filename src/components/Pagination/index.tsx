@@ -3,9 +3,10 @@ import styles from './Pagination.module.scss';
 
 interface PaginationProps {
     onChangePage: (numPage: number) => void;
+    pageCount: number;
 }
 
-export const Pagination = ({ onChangePage }: PaginationProps) => {
+export const Pagination = ({ onChangePage, pageCount }: PaginationProps) => {
     onChangePage;
     return (
         <div>
@@ -16,6 +17,7 @@ export const Pagination = ({ onChangePage }: PaginationProps) => {
                 onPageChange={(event) => onChangePage(event.selected + 1)}
                 pageRangeDisplayed={8}
                 pageCount={3}
+                forcePage={pageCount}
                 previousLabel="<"
                 renderOnZeroPageCount={null}
             />

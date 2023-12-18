@@ -1,6 +1,7 @@
-import { useContext, useRef } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
 import styles from './Search.module.scss';
 import { SearchContext } from '../App/App';
+import debounce from 'lodash.debounce';
 
 export interface searchTypes {
     searchValue: string;
@@ -8,12 +9,25 @@ export interface searchTypes {
 }
 
 export const Search = () => {
+    const [valInput, setValInput] = useState('');
     const { searchValue, setSearchValue } = useContext(SearchContext);
     const inputRef = useRef();
 
     const onClickClear = () => {
         setSearchValue('');
         inputRef.current.focus();
+    };
+
+    const updateSearchValue = useCallback(
+        debounce((value) => {
+            setSearchValue(value);
+        }, 300),
+        []
+    );
+
+    const onChangeInput = (event) => {
+        setValInput(event.target.value);
+        updateSearchValue(event.target.value);
     };
 
     return (
@@ -23,8 +37,8 @@ export const Search = () => {
                 className={styles.search}
                 type="text"
                 placeholder="Поиск..."
-                onChange={(event) => setSearchValue(event.target.value)}
-                value={searchValue}
+                onChange={onChangeInput}
+                value={valInput}
             />
 
             {searchValue && (
