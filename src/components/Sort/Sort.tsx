@@ -2,18 +2,20 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './Sort.scss';
 import { setSort } from '../../redux/slices/filter';
+
+export const sortList = [
+    { name: 'полулярности (DESC)', sortProperty: 'rating' },
+    { name: 'полулярности (ASC)', sortProperty: '-rating' },
+    { name: 'цене (DESC)', sortProperty: 'price' },
+    { name: 'цене (ASC)', sortProperty: '-price' },
+    { name: 'алфавиту (DESC)', sortProperty: 'title' },
+    { name: 'алфавиту (ASC)', sortProperty: '-title' },
+];
+
 export const Sort = () => {
     const dispatch = useDispatch();
     const sort = useSelector((state) => state.filter.sort);
     const [open, setOpen] = useState(false);
-    const sortList = [
-        { name: 'полулярности (DESC)', sortProperty: 'rating' },
-        { name: 'полулярности (ASC)', sortProperty: '-rating' },
-        { name: 'цене (DESC)', sortProperty: 'price' },
-        { name: 'цене (ASC)', sortProperty: '-price' },
-        { name: 'алфавиту (DESC)', sortProperty: 'title' },
-        { name: 'алфавиту (ASC)', sortProperty: '-title' },
-    ];
 
     const onSelectSortElement = (obj) => {
         dispatch(setSort(obj));

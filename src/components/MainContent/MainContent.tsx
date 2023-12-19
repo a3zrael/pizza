@@ -1,12 +1,18 @@
 import { Categories } from '../Categories/Categories';
-import { Sort } from '../Sort/Sort';
+import { Sort, sortList } from '../Sort/Sort';
 import { PizzaCard } from '../PizzaCard/PizzaCard';
 import Skeleton from '../PizzaCard/Skeleton';
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
 import { Pagination } from '../Pagination';
 import { SearchContext } from '../App/App';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryId, setPageCount } from '../../redux/slices/filter';
+import {
+    setCategoryId,
+    setPageCount,
+    setFilters,
+} from '../../redux/slices/filter';
+import { useNavigate } from 'react-router-dom';
+import qs from 'qs';
 import axios from 'axios';
 
 interface PizzaItems {
@@ -20,15 +26,21 @@ interface PizzaItems {
 }
 
 export const MainContent: FC = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const isSearch = useRef(false);
+    const inMounted = useRef(false);
+
     const { categoryId, sort, pageCount } = useSelector(
         (state) => state.filter
     );
+
     const sortType = sort.sortProperty;
     const { searchValue } = useContext(SearchContext);
     const [pizzaItems, setPizzaItems] = useState<PizzaItems[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    useEffect(() => {
+
+    const fetchPizzas = () => {
         setIsLoading(true);
 
         const category = categoryId > 0 ? `category=${categoryId}` : '';
@@ -44,8 +56,39 @@ export const MainContent: FC = () => {
                 setPizzaItems(response.data);
                 setIsLoading(false);
             });
+    };
 
-        window.scrollTo(0, 0);
+    useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1));
+            console.log(params);
+            const sort = sortList.find(
+                (obj) => obj.sortProperty === params.sortProperty
+            );
+            dispatch(setFilters({ ...params, sort }));
+            isSearch.current = true;
+        }
+    });
+
+    useEffect(() => {
+        // window.scroll(0, 0);
+        if (!isSearch.current) {
+            fetchPizzas();
+        }
+        isSearch.current = false;
+    }, [categoryId, sortType, searchValue, pageCount]);
+
+    useEffect(() => {
+        if (inMounted.current) {
+            const queryString = qs.stringify({
+                sortProperty: sort.sortProperty,
+                categoryId,
+                pageCount,
+            });
+
+            navigate(`?${queryString}`);
+        }
+        inMounted.current = true;
     }, [categoryId, sortType, searchValue, pageCount]);
 
     const pizzas = pizzaItems.map((element, index) => (
