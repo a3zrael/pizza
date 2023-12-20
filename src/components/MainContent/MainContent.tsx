@@ -78,19 +78,6 @@ export const MainContent: FC = () => {
         isSearch.current = false;
     }, [categoryId, sortType, searchValue, pageCount]);
 
-    useEffect(() => {
-        if (inMounted.current) {
-            const queryString = qs.stringify({
-                sortProperty: sort.sortProperty,
-                categoryId,
-                pageCount,
-            });
-
-            navigate(`?${queryString}`);
-        }
-        inMounted.current = true;
-    }, [categoryId, sortType, searchValue, pageCount]);
-
     const pizzas = pizzaItems.map((element, index) => (
         <PizzaCard key={index} {...element} />
     ));
